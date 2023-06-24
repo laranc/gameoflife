@@ -66,6 +66,14 @@ static void tick(Simulation *simulation)
     {
         simulation->universe.draw_grid = !simulation->universe.draw_grid;
     }
+    if (IsKeyPressed(KEY_UP))
+    {
+        simulation->speed -= 0.01;
+    }
+    if (IsKeyPressed(KEY_DOWN))
+    {
+        simulation->speed += 0.01;
+    }
     switch (simulation->state)
     {
     case PAUSED:
