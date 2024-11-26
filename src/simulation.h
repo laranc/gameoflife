@@ -1,48 +1,37 @@
 #pragma once
 
-#include <raylib.h>
-
 #include "universe.h"
 
-typedef struct Timer
-{
-    double start_time;
-    double lifetime;
+typedef struct _timer_t {
+  f64 start_time;
+  f64 lifetime;
 } Timer;
 
-typedef enum State
-{
-    PAUSED,
-    RUNNING,
+typedef enum state_t {
+  PAUSED,
+  RUNNING,
 } State;
 
-typedef struct Simulation
-{
-    Timer timer;
-    double speed;
-    Universe universe;
-    int state;
-    Vector2 mouse_pos;
+typedef struct simulation_t {
+  Universe *universe;
+  Timer timer;
+  f64 speed;
+  u8 state;
+  Vector2 mouse_pos;
 } Simulation;
 
-Simulation initSimulation(void);
-void startSimulation(Simulation *simulation);
-void drawSimulation(Simulation *simulation);
-void closeSimulation(Simulation *simulation);
-static void tick(Simulation *simulation);
-static void update(Simulation *simulation);
-static void edit(Simulation *simulation);
+Simulation *simulationInit(void);
+void simulationStart(Simulation *simulation);
+void simulationUpdate(Simulation *simulation);
+void simulationClose(Simulation *simulation);
 
-inline static void startTimer(Timer *timer, double lifetime)
-{
-    timer->start_time = GetTime();
-    timer->lifetime = lifetime;
+inline static void startTimer(Timer *timer, f64 lifetime) {
+  timer->start_time = GetTime();
+  timer->lifetime = lifetime;
 }
-inline static bool timerDone(const Timer *timer)
-{
-    return GetTime() - timer->start_time >= timer->lifetime;
+inline static bool timerDone(const Timer *timer) {
+  return GetTime() - timer->start_time >= timer->lifetime;
 }
-inline static double timerGetElapsed(const Timer *timer)
-{
-    return GetTime() - timer->start_time;
+inline static f64 timerGetElapsed(const Timer *timer) {
+  return GetTime() - timer->start_time;
 }

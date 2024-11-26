@@ -1,13 +1,15 @@
-#include <raylib.h>
+#include <stdlib.h>
+#include <time.h>
 
 #include "simulation.h"
 
-int main(void)
-{
-    Simulation simulation = initSimulation();
-    startSimulation(&simulation);
-    drawSimulation(&simulation);
-    closeSimulation(&simulation);
+i32 main(void) {
+  srand(time(NULL));
 
-    return 0;
+  Simulation *simulation = simulationInit();
+  simulationStart(simulation);
+  simulationUpdate(simulation);
+  simulationClose(simulation);
+
+  return 0;
 }
